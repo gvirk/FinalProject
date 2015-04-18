@@ -3,10 +3,12 @@
 ﻿module constants {
     // State Machine Constants
     export var MENU_STATE: number = 0;
-    export var PLAY_STATE: number = 1;
+    export var GAME_PLAY_1: number = 1;
     export var GAME_OVER_STATE: number = 2;
     export var INSTRUCTIONS_STATE: number = 3;
-
+    export var GAME_PLAY_1_OVER: number = 4;
+    export var GAME_PLAY_2: number = 5;
+    export var GAME_PLAY_2_OVER: number = 6;
     // Game Constants
     export var CLOUD_NUM: number = 3;
     export var LABEL_FONT = "40px Consolas";

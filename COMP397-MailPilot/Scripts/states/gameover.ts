@@ -60,6 +60,7 @@ module states {
 
         public tryAgainClicked() {
             this.tryAgain = true;
+            gamePlay1Loop = 5;
         }
 
         // PUBLIC METHODS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -69,8 +70,9 @@ module states {
 
             if (this.tryAgain) {
                 this.game.removeAllChildren();
+                
                 stage.removeChild(this.game);
-                currentState = constants.PLAY_STATE;
+                currentState = constants.GAME_PLAY_1;
                 stateChanged = true;
             }
 

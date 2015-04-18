@@ -30,6 +30,13 @@ var assetLoader: createjs.LoadQueue;
 var stats: Stats = new Stats();
 var currentScore = 0;
 var highScore = 0;
+var lives = 0;
+var gamePlay1Loop = 5;
+var flagStage1 = false;
+var flagStage2 = false;
+var flagStage3 = false;
+var flagNewPlane = true;
+var flagPower = true;
 
 
 // Game State Variables
@@ -37,8 +44,11 @@ var currentState: number;
 var currentStateFunction: any;
 var stateChanged: boolean = false;
 
-var gamePlay: states.GamePlay1;
+var gamePlay1: states.GamePlay1;
+var gamePlay2: states.GamePlay2;
 var gameOver: states.GameOver;
+var gamePlay1Over: states.GamePlay1Over;
+var gamePlay2Over: states.GamePlay2Over;
 var menu: states.Menu;
 var instructions: states.Instructions;
 
@@ -47,16 +57,28 @@ var manifest = [
     { id: "cloud", src: "assets/images/asteroids.png" },
     { id: "island", src: "assets/images/planet.png" },
     { id: "ocean", src: "assets/images/space.png" },
+    { id: "rocket", src: "assets/images/rocket.png" },
+    { id: "enemyRocket", src: "assets/images/enemyRocket.png" },
+    { id: "enemyPlane1", src: "assets/images/enemyPlane1.png" },
+    { id: "enemyPlane2", src: "assets/images/enemyPlane2.png" },
+    { id: "explosionOriginal", src: "assets/images/ExplosionSpriteSheet.png" },
+    { id: "shieldSpriteSheet", src: "assets/images/shieldSpriteSheet.png" },
+    { id: "stage1", src: "assets/images/stage1.png" },
+    { id: "stage2", src: "assets/images/stage1.png" },
+    { id: "stage3", src: "assets/images/stage1.png" },
     { id: "plane", src: "assets/images/playership.png" },
-    { id: "playButton", src: "assets/images/playGameButton.png" },
+    { id: "playButton", src: "assets/images/labelPlayGame.png" },
     { id: "tryAgainButton", src: "assets/images/playAgainButton.png" },
-    { id: "instructionsLogo", src: "assets/images/instructionsLogo.png" },
+    { id: "instructionsLogo", src: "assets/images/labelInstructions.png" },
     { id: "instruction", src: "assets/images/instructions.png" },
     { id: "powership", src: "assets/images/powership.png" },
     { id: "powerPlanet", src: "assets/images/powerPlanet.png" },
+    { id: "labelStage2Start", src: "assets/images/labelStage2.png" },
+    { id: "labelStage3Start", src: "assets/images/labelStage3.png" },
     { id: "engine", src: "assets/audio/star.ogg" },
     { id: "yay", src: "assets/audio/powerup.wav" },
-    { id: "thunder", src: "assets/audio/collision.wav" }
+    { id: "thunder", src: "assets/audio/collision.wav" },
+    { id: "blast", src: "assets/audio/Blast.mp3" }
 ];
 
 
@@ -66,6 +88,8 @@ function Preload() {
     assetLoader.on("complete", init, this); // when assets finished preloading - then init function
 
     assetLoader.loadManifest(manifest);
+
+        
 }
 
 
@@ -123,16 +147,34 @@ function changeState(state: number): void {
             currentStateFunction = instructions;
             break;
 
-        case constants.PLAY_STATE:
+        case constants.GAME_PLAY_1:
             // instantiate game play screen
-            gamePlay = new states.GamePlay1();
-            currentStateFunction = gamePlay;
+            gamePlay1 = new states.GamePlay1();
+            currentStateFunction = gamePlay1;
             break;
 
         case constants.GAME_OVER_STATE:
             // instantiate game over screen
             gameOver = new states.GameOver();
             currentStateFunction = gameOver;
+            break;
+
+        case constants.GAME_PLAY_1_OVER:
+            // instantiate game over screen
+            gamePlay1Over = new states.GamePlay1Over();
+            currentStateFunction = gamePlay1Over;
+            break;
+
+        case constants.GAME_PLAY_2:
+            // instantiate game play 2 screen
+            gamePlay2 = new states.GamePlay2();
+            currentStateFunction = gamePlay2;
+            break;
+
+        case constants.GAME_PLAY_2_OVER:
+            // instantiate game play 2 over screen
+            gamePlay2Over = new states.GamePlay2Over();
+            currentStateFunction = gamePlay2Over;
             break;
     }
 }
